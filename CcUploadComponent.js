@@ -1,18 +1,26 @@
 class CcUploadComponent extends HTMLElement {
   constructor() {
     super();
+    this.labeltext = null;
+    this.icon = null;
   }
 
   connectedCallback() {
     globalLabelCount++;
     this.style.display = "inline-block";
-    var label = this.getAttribute("label") || "Bitte Dateien auswählen";
-    this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}"
-      style="position: absolute !important;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);">
-    <button class="mdc-button mdc-button--raised">
-      <label for="fileElem-${globalLabelCount}" style="cursor:pointer;display:inline-block;height:34px;line-height:34px;vertical-align:center;" class="mdc-button__label">${label}</label>
-    </button>
-`;
+    if (this.icon) {
+      this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}"
+        style="position: absolute !important;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);">
+        <label for="fileElem-${globalLabelCount}" style="cursor:pointer;display:inline-block;height:24px;line-height:24px;vertical-align:center;"><i class="material-icons mdc-button__icon" aria-hidden="true">${this.icon}</i></label>`;
+    } else {
+      var label = this.labeltext || this.getAttribute("label") || "Bitte Dateien auswählen";
+      this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}"
+        style="position: absolute !important;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);">
+      <button class="mdc-button mdc-button--raised">
+        <label for="fileElem-${globalLabelCount}" style="cursor:pointer;display:inline-block;height:34px;line-height:34px;vertical-align:center;" class="mdc-button__label">${label}</label>
+      </button>
+  `;
+    }
 
     this.input = this.querySelector("input");
     this.input.addEventListener("change", (e) => { this.handleFiles(e.target.files); }, false);
@@ -31,6 +39,10 @@ class CcUploadComponent extends HTMLElement {
 
   handleFiles(files) {
     this.dispatchEvent(new CustomEvent("files", { detail: files}));
+  }
+
+  openFileDialog() {
+    this.input.click();
   }
 }
 

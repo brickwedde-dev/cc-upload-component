@@ -3,10 +3,12 @@ class CcUploadComponent extends HTMLElement {
     super();
     this.labeltext = null;
     this.icon = null;
+    this.upload = null;    
   }
 
   connectedCallback() {
     globalLabelCount++;
+
     this.style.display = "inline-block";
     if (this.icon) {
       this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}"
@@ -37,7 +39,30 @@ class CcUploadComponent extends HTMLElement {
     this.handleFiles(dt.files);
   }
 
+  doUpload() {
+    return new Promise((resolve, reject) => {
+      if (this.upload) {
+        var reader = new FileReader();
+        reader.onloadend = () => {
+          var base64data = reader.result;
+          var options = JSON.parse(JSON.stringify(this.upload.options));
+          options.body = JSON.stringify({ content: base64data, filename: this.upload.filename ? this.upload.filename : this._files[0].name });
+  
+          fetch(this.upload.url, options)
+          .then((response) => {
+            if (!response.ok) {
+              reject(new Error('Network response was not ok'));
+            }
+            resolve();
+          });
+        };
+        reader.readAsDataURL(this._files[0]);
+      }
+    });
+  }
+
   handleFiles(files) {
+    this._files = files;
     this.dispatchEvent(new CustomEvent("files", { detail: files}));
   }
 

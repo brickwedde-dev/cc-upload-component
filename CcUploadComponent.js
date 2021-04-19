@@ -3,7 +3,8 @@ class CcUploadComponent extends HTMLElement {
     super();
     this.labeltext = null;
     this.icon = null;
-    this.upload = null;    
+    this.upload = null;
+    this.iconFontSize = 24;
   }
 
   connectedCallback() {
@@ -13,7 +14,7 @@ class CcUploadComponent extends HTMLElement {
     if (this.icon) {
       this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}"
         style="position: absolute !important;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);">
-        <label for="fileElem-${globalLabelCount}" style="cursor:pointer;display:inline-block;height:24px;line-height:24px;vertical-align:center;"><i class="material-icons mdc-button__icon" aria-hidden="true">${this.icon}</i></label>`;
+        <label for="fileElem-${globalLabelCount}" style="cursor:pointer;display:inline-block;height:${this.iconFontSize}px;line-height:${this.iconFontSize}px;vertical-align:center;"><i class="material-icons mdc-button__icon" style="font-size:${this.iconFontSize}px;" aria-hidden="true">${this.icon}</i></label>`;
     } else {
       var label = this.labeltext || this.getAttribute("label") || "Bitte Dateien auswählen";
       this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}"

@@ -26,7 +26,8 @@ class CcUploadComponent extends HTMLElement {
     }
 
     this.input = this.querySelector("input");
-    this.input.addEventListener("change", (e) => { this.handleFiles(e.target.files); }, false);
+    this.input.addEventListener("change", (e) => { this.handleFiles(e.target.files); e.target.value = "";}, false);
+    
     this.label = this.querySelector("label");
     this.label.addEventListener("dragenter", (e) => { e.stopPropagation(); e.preventDefault(); }, false);
     this.label.addEventListener("dragover", (e) => { e.stopPropagation(); e.preventDefault(); }, false);

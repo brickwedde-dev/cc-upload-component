@@ -38,7 +38,7 @@ class CcUploadComponent extends HTMLElement {
     e.stopPropagation();
     e.preventDefault();
     var dt = e.dataTransfer;
-    this.handleFiles(dt.files);
+    this.handleFiles(dt.files, dt);
   }
 
   doUpload() {
@@ -63,9 +63,10 @@ class CcUploadComponent extends HTMLElement {
     });
   }
 
-  handleFiles(files) {
+  handleFiles(files, dataTransfer) {
     this._files = files;
     this.dispatchEvent(new CustomEvent("files", { detail: files}));
+    this.dispatchEvent(new CustomEvent("dataTransfer", { detail: { dataTransfer }}));
   }
 
   openFileDialog() {

@@ -93,13 +93,16 @@ class CcUploadComponent2 extends HTMLElement {
     var icon = this.icon || this.getAttribute("icon") || "";
     var iconFontSize = this.getAttribute("iconFontSize") || this.iconFontSize;
 
+    var hasFontSize = ("" + this.style.fontSize).indexOf("p") > 0;
+    var hasWidth = ("" + this.style.width).indexOf("px") > 0;
+    var hasHeight = ("" + this.style.height).indexOf("px") > 0;
+
     this.style.display = "inline-block";
     if (icon && label) {
       this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}" style="position: absolute !important;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);">
-        <button class="mdc-button mdc-button--raised">
-          <label for="fileElem-${globalLabelCount}" style="cursor:pointer;display:inline-block;height:34px;line-height:34px;vertical-align:center;" class="mdc-button__label">
-            <i class="material-icons mdc-button__icon" style="font-size:${iconFontSize}px;" aria-hidden="true">${icon}</i>&nbsp;<span style='vertical-align:top;line-height:34px;'>${label}</span>
-          </label>
+        <button style="${hasWidth ? `width:100%;` : ``}${hasHeight ? `height:100%;` : ``}${hasFontSize ? `font-size:${this.style.fontSize};` : ``}" class="mdc-button mdc-button--raised">
+          <i class="material-icons mdc-button__icon" aria-hidden="true">${icon}</i>
+          <label for="fileElem-${globalLabelCount}" class="mdc-button__label">${label}</label>
         </button>
       `;
     } else if (icon) {
@@ -109,7 +112,7 @@ class CcUploadComponent2 extends HTMLElement {
     } else {
       this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}"
         style="position: absolute !important;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);">
-      <button class="mdc-button mdc-button--raised">
+      <button style="${hasWidth ? `width:100%;` : ``}${hasHeight ? `height:100%;` : ``}${hasFontSize ? `font-size:${this.style.fontSize};` : ``}" class="mdc-button mdc-button--raised">
         <label for="fileElem-${globalLabelCount}" style="cursor:pointer;display:inline-block;height:34px;line-height:34px;vertical-align:center;" class="mdc-button__label">${label || t9n`Upload`}</label>
       </button>
   `;

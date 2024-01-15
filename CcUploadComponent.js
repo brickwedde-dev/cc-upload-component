@@ -100,10 +100,12 @@ class CcUploadComponent2 extends HTMLElement {
     this.style.display = "inline-block";
     if (icon && label) {
       this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}" style="position: absolute !important;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);">
-        <button style="${hasWidth ? `width:100%;` : ``}${hasHeight ? `height:100%;` : ``}${hasFontSize ? `font-size:${this.style.fontSize};` : ``}" class="mdc-button mdc-button--raised">
-          <i class="material-icons mdc-button__icon" aria-hidden="true">${icon}</i>
-          <label for="fileElem-${globalLabelCount}" class="mdc-button__label">${label}</label>
-        </button>
+        <label for="fileElem-${globalLabelCount}">
+          <div style="display:inline-flex;vertical-align:middle;${hasWidth ? `width:100%;` : ``}${hasHeight ? `height:100%;` : ``}${hasFontSize ? `font-size:${this.style.fontSize};` : ``}" class="mdc-button mdc-button--raised">
+            <i class="material-icons mdc-button__icon" aria-hidden="true" style="display:block;cursor:pointer;">${icon}</i>
+            <span class="mdc-button__label" style="display:block;cursor:pointer;">${label}</span>
+          </div>
+        </label>
       `;
     } else if (icon) {
       this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}"
@@ -121,7 +123,7 @@ class CcUploadComponent2 extends HTMLElement {
     this.input = this.querySelector("input");
     this.input.addEventListener("change", (e) => { this.handleFiles(e.target.files); e.target.value = "";}, false);
     
-    this.label = this.querySelector("label");
+    this.label = this.querySelector("button") || this.querySelector("label");
     this.label.addEventListener("dragenter", (e) => { e.stopPropagation(); e.preventDefault(); }, false);
     this.label.addEventListener("dragover", (e) => { e.stopPropagation(); e.preventDefault(); }, false);
     this.label.addEventListener("drop", (e) => {this.drop(e); }, false);

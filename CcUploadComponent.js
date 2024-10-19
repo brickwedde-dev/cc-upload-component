@@ -102,7 +102,7 @@ class CcUploadComponent2 extends HTMLElement {
       this.innerHTML = `<input type="file" id="fileElem-${globalLabelCount}" multiple accept="*/*" aria-labelledby="cc-mdc-label-${globalLabelCount}" style="position: absolute !important;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);">
         <label for="fileElem-${globalLabelCount}">
           <div style="display:inline-flex;vertical-align:middle;${hasWidth ? `width:100%;` : ``}${hasHeight ? `height:100%;` : ``}${hasFontSize ? `font-size:${this.style.fontSize};` : ``}" class="mdc-button mdc-button--raised">
-            <i class="material-icons mdc-button__icon" aria-hidden="true" style="display:block;cursor:pointer;">${icon}</i>
+            <i class="material-icons mdc-button__icon" aria-hidden="true" style="display:block;cursor:pointer;height:24px;font-size:24px;">${icon}</i>
             <span class="mdc-button__label" style="display:block;cursor:pointer;">${label}</span>
           </div>
         </label>
